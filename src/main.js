@@ -7,19 +7,7 @@ let package = [];
 let datas = [];
 let currentTime = 0;
 let times = [];
-let avg_coef_len = Math.floor(fs/60);
-const coef = Array(avg_coef_len).fill(1/avg_coef_len);
-const queue = Array(avg_coef_len).fill(0);
 
-function movingAvg(dot, coef, flag) {
-
-    queue.shift();
-    queue.push(dot);
-
-    let tmp = 0;
-    queue.forEach((_, idx) => tmp += coef[idx] * queue[idx]);
-    return (flag)? tmp : dot;
-}
 
 const fs = 500;
 const totalTime = 5;
@@ -65,7 +53,19 @@ const timer = {
         this.timerFlag = 0;
     }
 };
+let avg_coef_len = Math.floor(fs/60);
+const coef = Array(avg_coef_len).fill(1/avg_coef_len);
+const queue = Array(avg_coef_len).fill(0);
 
+function movingAvg(dot, coef, flag) {
+
+    queue.shift();
+    queue.push(dot);
+
+    let tmp = 0;
+    queue.forEach((_, idx) => tmp += coef[idx] * queue[idx]);
+    return (flag)? tmp : dot;
+}
 
 $('.btn').click(ble);
 
